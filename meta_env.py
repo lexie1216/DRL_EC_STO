@@ -139,8 +139,8 @@ class EpidemicModel(gym.Env):
         economy_cost = -action.sum() / self.ZONE_NUM
         total_recovery = self.simState[:, 3].sum()
         attack_rate = (total_recovery + total_infections) / 17493765
-        if attack_rate > 0.5:
-            economy_cost = economy_cost * 5
+        # if attack_rate > 0.5:
+        #     economy_cost = economy_cost * 5
 
         t_order_cost = -np.abs(action - self.actions[-2]).sum() / self.ZONE_NUM
         s_order_cost = -self.spatio_entropy(action) / self.ZONE_NUM
@@ -205,12 +205,10 @@ class EpidemicModel(gym.Env):
 
 if __name__ == '__main__':
 
-    # actions = np.zeros((180, ZN))
-    actions = np.ones((180, ZN))
-    # actions = np.random.randint(3, size=(180, ZN))
 
+    actions = np.ones((180, ZN))
     env = EpidemicModel()
-    # actions[13:50, :] = 2
+
 
     for i in range(1):
         env.reset()
@@ -219,26 +217,12 @@ if __name__ == '__main__':
         while True:
 
             s_, r, done, info = env.step(action=actions[ep_s] * i)
-            # print(s_.shape)
+
             ep_s += 1
             ep_r += r
 
-            # print(ep_s,r)
-
             if done:
                 env.render()
-                np.save('no_intervention_simRe.npy', np.array(env.simRes))
-
                 print("end of episode %d||  reward:%.2f, steps:%d" % (i, ep_r, ep_s))
-                max_I = np.max(np.sum(env.simRes[:, :, 2], axis=1))
-                overload = (max_I - env.capacity) / env.capacity
-                print(overload)
-                print(env.daily_new_E)
-
-                import csv
-                with open("daily_new_E.csv", 'w', newline='') as t:  # numline是来控制空的行数的
-                    writer = csv.writer(t)  # 这一步是创建一个csv的写入器（个人理解）
-                    writer.writerows(env.daily_new_E)  # 写入样本数据
-
                 env.reset()
                 break

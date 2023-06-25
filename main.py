@@ -265,27 +265,9 @@ parser.add_argument("--experiment_idx", type=int, default=int(1),
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    # args.experiment_idx = 4
-    # args.model_idx = 100
-    # args.load_model = True
-    # args.lr_a = 1e-6
-    # args.lr_c = 1e-6
-    # args.max_train_steps = int(1.2e6)
-    #
-    # main(args,seed=3047)
+    # for training
 
-    args.model_idx = 200
+    main(args,seed=3047)
 
-    # for i in range(4):
-    #     args.experiment_idx = i + 1
-    #     my_test(args)
-    for i in [2,3]:
-        args.experiment_idx = i + 1
-        my_test(args)
-
-    # args.experiment_idx = 4
-    # args.model_idx = 300
-    # my_test(args)
-    # args.experiment_idx = 4
-    # args.model_idx = 301
+    # for testing
     # my_test(args)

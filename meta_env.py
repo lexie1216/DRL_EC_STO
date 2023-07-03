@@ -86,7 +86,7 @@ class EpidemicModel(gym.Env):
         random.seed(3074)
 
         rand_list = [random.randint(0, self.ZONE_NUM - 1) for _ in range(init_infection)]
-        rand_list = [i % self.ZONE_NUM for i in range(init_infection)]
+        # rand_list = [i % self.ZONE_NUM for i in range(init_infection)]
         for sid in rand_list:
             self.simState[sid, 1] += 1
             self.simState[sid, 0] -= 1
